@@ -1,5 +1,7 @@
-import express from 'express' ; 
 import dotenv from 'dotenv' ;
+dotenv.config() ; 
+import express from 'express' ; 
+
 import cookieParser from 'cookie-parser';
 //Routes 
 import userRoutes from './routes/user.routes.js';
@@ -9,7 +11,7 @@ import messageRoutes from './routes/message.routes.js';
 import connectToMongoDB from './db/connectToMongoDB.js';
 const app = express() ; 
 const PORT = process.env.PORT || 5000 ; 
-dotenv.config() ; 
+
 
 app.use(express.json()) ; 
 app.use(cookieParser());

@@ -1,17 +1,28 @@
+import useConversation from "../../../zustand/useConversation";
+import { useAuthContext } from "../../context/AuthContext"
 
-const Message = () => {
+const Message = ({message}) => {
+   const{authUser} =useAuthContext();
+  const{selectedConversation} = useConversation() ; 
+ const fromMe = message?.senderId === authUser?._id ;
+
+ const chatClassName = fromMe ?'chat-end' : 'chat-start' ;
+ const profilePic = fromMe ? selectedConversation?.profilePic :authUser.profilePic ;
+ const bubbleBgColor = fromMe ?'bg-green-500' : "bg-gray-700" ; 
+
+
   return (
-    <div className="chat chat-end">
+    <div className={`chat ${chatClassName}`}>
         <div className="chat-image avatar">
     <div className="w-10 rounded-full">
-    <img src="" alt="tailwind css chat bubble" />
+    <img alt="tailwind css chat bubble" src ={profilePic}/>
     </div>
         </div>
-        <div className="chat-bubble chat-success text-white">
-        Hi! what's up ?
+        <div className={`chat-bubble text-white ${bubbleBgColor}`}>
+       {message.message}
         </div>
          <div className="chat-footer opacity-50 text-xs flex gap-1 items-center">
-       12:42
+       {message.createdAt && new Date(message.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
         </div>
     </div>
   )

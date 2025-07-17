@@ -19,8 +19,10 @@ export const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
 
-    const boyProfilePic = `https://avatar.iran.liara.run/boy?username=${username}`;
-    const girlProfilePic = `https://avatar.iran.liara.run/girl?username=${username}`;
+   // use avatars.dicebear.com
+const boyProfilePic = `https://api.dicebear.com/7.x/adventurer/png?seed=${username}`;
+const girlProfilePic = `https://api.dicebear.com/7.x/fun-emoji/png?seed=${username}`;
+
 
     const newUser = new User({
       fullName,
@@ -53,7 +55,7 @@ export const login = async (req, res) => {
     const isPasswordCorrect  = await bcrypt.compare(password , user ?.password || "");
 
     if(!user || !isPasswordCorrect){
-        return res.status(400).json({error :"invalid credentials"}) ;
+        return res.status(400).json({error :"invalid Username or password"}) ;
     }
     generateTokenAndSetCookies(user._id , res) ; 
      res.status(200).json({
